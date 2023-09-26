@@ -21,7 +21,8 @@ else
   PGPASSWORD=postgres psql -h localhost -U postgres -p 5000 pagila < $PWD/test/data/pagila-schema.sql
   PGPASSWORD=postgres psql -h localhost -U postgres -p 5000 pagila < $PWD/test/data/pagila-data.sql
   printf '\nrunning tests\n'
-  docker run --rm -v `pwd`:`pwd` -w `pwd` --network=dbs -i -t seocahill/ruby-postgres-alpine:0.1 ruby test/stack_tests.rb
+  #docker run --rm -v `pwd`:`pwd` -w `pwd` --network=dbs -i -t seocahill/ruby-postgres-alpine:0.1 ruby test/stack_tests.rb
+  docker run --rm -v `pwd`:`pwd` -w `pwd` --network=dbs -i -t timidri/ruby-psql-docker ruby test/stack_tests.rb
   printf '\ndone!'
 fi
 
