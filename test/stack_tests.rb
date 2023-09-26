@@ -54,8 +54,8 @@ class StackTests < MiniTest::Test
 
     # check sync small sleep here to allow replicas to catch up with master
     sleep 5
-    master_log = query("master", "SELECT pg_current_xlog_location();").getvalue(0,0)
-    replica_log = query("replica", "SELECT pg_last_xlog_receive_location();").getvalue(0,0)
+    master_log = query("master", "SELECT pg_current_wal_lsn();").getvalue(0,0)
+    replica_log = query("replica", "SELECT pg_last_wal_replay_lsn();").getvalue(0,0)
     assert_equal master_log, replica_log, "Cluster in sync"
   end
 

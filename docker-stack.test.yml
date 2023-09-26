@@ -30,8 +30,8 @@ services:
       - patroni.yml
     environment:
       - PATRONI_NAME=dbnode1
-        #- PATRONI_POSTGRESQL_DATA_DIR=data/dbnode1
-      - PATRONI_POSTGRESQL_DATA_DIR=data
+      - PATRONI_POSTGRESQL_DATA_DIR=/data/dbnode1
+        #- PATRONI_POSTGRESQL_DATA_DIR=data
       - PATRONI_POSTGRESQL_CONNECT_ADDRESS=dbnode1:5432
       - PATRONI_RESTAPI_CONNECT_ADDRESS=dbnode1:8008
     env_file:
@@ -54,8 +54,8 @@ services:
       - patroni.yml
     environment:
       - PATRONI_NAME=dbnode2
-      - PATRONI_POSTGRESQL_DATA_DIR=data
-        #- PATRONI_POSTGRESQL_DATA_DIR=data/dbnode2
+        # - PATRONI_POSTGRESQL_DATA_DIR=data
+      - PATRONI_POSTGRESQL_DATA_DIR=/data/dbnode2
       - PATRONI_POSTGRESQL_CONNECT_ADDRESS=dbnode2:5432
       - PATRONI_RESTAPI_CONNECT_ADDRESS=dbnode2:8008
     env_file:
