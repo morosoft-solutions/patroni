@@ -16,10 +16,10 @@ services:
     #command: haproxy -f /haproxy_cfg
     command: haproxy -f /haproxy_cfg -d
     deploy:
-      replicas: 1
+      replicas: 2
       placement:
         constraints:
-          - "node.hostname==iditelesom-db-1"
+          - node.labels.app == db
         max_replicas_per_node: 1
 
   dbnode1:
