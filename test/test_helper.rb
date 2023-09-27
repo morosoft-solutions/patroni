@@ -56,9 +56,9 @@ module TestHelper
   end
 
   def lookup_replicas
-    response = get_request("http://haproxy:8008/replica")
+    response = get_request("http://haproxy:8008/cluster")
     if response.body
-      JSON.parse(response.body)["replication"]&.map { |db| db["application_name"] }
+      JSON.parse(response.body)["members"]&.select { |db| db["role"] == "replica" }&.map { |db| db["name"] }
     else
       []
     end
