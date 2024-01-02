@@ -18,8 +18,8 @@ services:
     deploy:
       replicas: 2
       placement:
-        constraints:
-          - node.labels.app == db
+        # constraints:
+        #   - node.labels.app == db
         max_replicas_per_node: 1
 
   dbnode1:
@@ -35,16 +35,16 @@ services:
       - PATRONI_POSTGRESQL_CONNECT_ADDRESS=dbnode1:5432
       - PATRONI_RESTAPI_CONNECT_ADDRESS=dbnode1:8008
     env_file:
-      - test.env
+      - patroni.env
     networks:
       - dbs
-      - etcd_etcd
+      - etcd
     entrypoint: patroni
     command: /run/secrets/patroni.yml
     deploy:
       placement:
         constraints:
-          - "node.hostname==iditelesom-db-1"
+          - "node.labels.rank==host02"
 
   dbnode2:
     image: timidri/patroni:latest
@@ -59,16 +59,16 @@ services:
       - PATRONI_POSTGRESQL_CONNECT_ADDRESS=dbnode2:5432
       - PATRONI_RESTAPI_CONNECT_ADDRESS=dbnode2:8008
     env_file:
-      - test.env
+      - patroni.env
     networks:
       - dbs
-      - etcd_etcd
+      - etcd
     entrypoint: patroni
     command: /run/secrets/patroni.yml
     deploy:
       placement:
         constraints:
-          - "node.hostname==iditelesom-db-2"
+          - "node.labels.rank==host03"
    
 volumes:
   db-1-data:
@@ -76,8 +76,12 @@ volumes:
 
 networks:
   dbs:
-    external: true
-  etcd_etcd:
+    driver: overlay
+    driver_opts:
+      encrypted: "true"
+    attachable: true
+    name: dbs
+  etcd:
     external: true
 
 configs:

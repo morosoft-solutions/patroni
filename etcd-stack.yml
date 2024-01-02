@@ -25,7 +25,7 @@ services:
       replicas: 1
       placement:
         constraints:
-          - "node.hostname==iditelesom-db-1"
+          - "node.labels.rank==host01"
 
   etcd-01:
     image: quay.io/coreos/etcd:v3.5.9
@@ -49,7 +49,7 @@ services:
       replicas: 1
       placement:
         constraints:
-          - "node.hostname==iditelesom-db-2"
+          - "node.labels.rank==host02"
 
   etcd-02:
     image: quay.io/coreos/etcd:v3.5.9
@@ -73,7 +73,7 @@ services:
       replicas: 1
       placement:
         constraints:
-          - "node.hostname==iditelesom-db-2"
+          - "node.labels.rank==host03"
 
 volumes:
   etcd-00vol:
@@ -90,3 +90,4 @@ networks:
       encrypted: "true"
         #internal: true
     attachable: true
+    name: etcd
